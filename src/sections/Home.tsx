@@ -24,7 +24,17 @@ import {
 
 // --- Design System Components ---
 
-const Button = ({ children, variant = "primary", className = "", onClick }) => {
+const Button = ({
+  children,
+  variant = "primary" as const,
+  className = "",
+  onClick = () => {},
+}: {
+  children: React.ReactNode;
+  variant?: "primary" | "secondary" | "outline" | "white" | "green";
+  className?: string;
+  onClick?: () => void;
+}) => {
   // Styles for a more modern, bold button feel
   const baseStyle =
     "inline-flex items-center justify-center px-8 py-3 rounded-lg font-bold tracking-wide transition-all duration-300 transform hover:-translate-y-1 shadow-md cursor-pointer";
@@ -56,6 +66,11 @@ const SectionHeading = ({
   subtitle,
   light = false,
   align = "center",
+}: {
+  title: string;
+  subtitle?: string;
+  light?: boolean;
+  align?: "center" | "left";
 }) => (
   <div
     className={`mb-16 ${
@@ -86,7 +101,16 @@ const SectionHeading = ({
   </div>
 );
 
-const StoryCard = ({
+interface StoryCardProps {
+  category: string;
+  title: string;
+  description: string;
+  icon: React.ComponentType<{ size?: number; className?: string }>;
+  progress: number;
+  imageUrl?: string;
+}
+
+const StoryCard: React.FC<StoryCardProps> = ({
   category,
   title,
   description,
@@ -154,7 +178,7 @@ export default function App() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  const scrollToSection = (id) => {
+  const scrollToSection = (id: string) => {
     const element = document.getElementById(id);
     if (element) {
       element.scrollIntoView({ behavior: "smooth" });
@@ -558,8 +582,8 @@ export default function App() {
             </p>
             <div className="bg-orange-50 p-6 rounded-xl border border-orange-100 mb-8">
               <p className="font-bold text-orange-800 text-lg">
-                "Your support can help them live their remaining life with
-                dignity, comfort, and love — not suffering or hunger."
+                &quot;Your support can help them live their remaining life with
+                dignity, comfort, and love — not suffering or hunger.&quot;
               </p>
             </div>
 
